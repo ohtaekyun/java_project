@@ -1,0 +1,6 @@
+package com.project_0207.project;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface UserRepository extends MongoRepository<User, String> {
+    User findByUserid(String userid);
+}
