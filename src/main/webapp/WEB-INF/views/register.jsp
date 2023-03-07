@@ -16,12 +16,11 @@
                 <td>아이디:</td>
                 <td><form:input path="userid" /></td>
                 <td><button id="userid_confirm">아이디 중복 확인</button></td>
-                
+                <td>${user.userid}</td>
             </tr>
             <tr>
                 <td>닉네임:</td>
-                <td><form:input path="nickname" /></td>
-                <td><button id="nickname_confirm">닉네임 중복 확인</button></td>
+                <td><form:input path="nickname" /></td>       
             </tr>
             <tr>
                 <td>비밀번호:</td>
@@ -31,7 +30,7 @@
                 <td>비밀번호 확인:</td>
                 <td><input type="password" id="password2" name="password2" /></td>
                 <td><button id="password_confirm">비밀번호 일치 확인</button></td>
-                <td>${user.userid}</td>
+                
                 
             </tr>            
             <tr>
@@ -67,8 +66,8 @@ $('#password_confirm').on('click', function() {
     }
 });
 $('#userid_confirm').on('click', function() {
-    var userid = $('#userid').val();
-    if (userid == '') {
+    var user_id = $('#userid').val();
+    if (user_id == '') {
         alert('아이디를 입력하세요');
         return false;
     } else {

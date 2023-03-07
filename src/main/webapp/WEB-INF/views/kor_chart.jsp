@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="io.github.cdimascio.dotenv.Dotenv" %>
+<%
+  Dotenv dotenv = Dotenv.load();
+  String api_Key = dotenv.get("API_KEY");
+%>
 <body>
     <a href="/home">홈으로</a>
     <a href="/us_chart">US CHART</a>
@@ -7,27 +12,20 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
     $(document).ready(function() {    
-    var apiKey = "8216eb699ed2bd015dacdee072057fc2"; // Last.fm API key  
+    var apiKey = '<%= api_Key %>'; 
     $.ajax({ // request information
         url: 'https://ws.audioscrobbler.com/2.0/',
         data: {
-            method: 'library.getArtists',
+            method: 'geo.getTopTracks',
             format: 'json',
-            user: 'Komet',
+            country: 'japan',
             api_key: apiKey
         },
         dataType: 'json',
         success: function(response) {
             console.log(response)            
-            var tracks = response.tracks.track; // track list
-            var sortedTracks = tracks.map(function(track, index) {
-                return { track: track, index: index };
-            }).sort(function(a, b) {
-                return a.index - b.index;
-            }).map(function(obj) {
-                return obj.track;
-            });
-            $.each(sortedTracks, function(index, track) { // each track process
+            var tracks = response.tracks.track; // track list            
+            $.each(tracks, function(index, track) { // each track process
                 $.ajax({ // track information request
                     url: 'https://ws.audioscrobbler.com/2.0/',
                     data: {

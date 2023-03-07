@@ -12,7 +12,7 @@
         <th>비밀번호</th>
         <th>닉네임</th>
         <th>실명</th>
-        <th>핸드폰 번호</th>
+        <th>핸드폰번호</th>
         <th>이메일</th>
       </tr>
       <c:forEach var="user" items="${userList}">

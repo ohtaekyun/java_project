@@ -17,25 +17,22 @@ public class UserController {
     // "user"라는 이름으로 새로운 'User' 객체를 생성하여 모델에 추가
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
-
-
-
-
-        List<User> userList = userRepository.findAll();
-        model.addAttribute("userList", userList);        
-
-
-
-        
+        model.addAttribute("user", new User());  
         return "register";
     }
 
     // 'user' 객체를 MongoDB 데이터베이스에 저장
     @PostMapping("/register")
-    public String registerUser(User user) {
-        userRepository.save(user);
+    public String registerUser(User user) {   
+        userRepository.save(user);  
         return "redirect:/login";
+
+        // User existingUser1 = userRepository.findByUserid(user.getUserid());
+        // if (existingUser1.getUserid().equals(user.getUserid())) {
+        //     return "redirect:/register";
+        // } else {
+            
+        // }    
     }
 
     // 로그인 페이지
@@ -51,6 +48,7 @@ public class UserController {
         if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
             return "redirect:/home";
         } else {
+            System.out.print("alert");
 
             // 비밀번호가 다를 경우 alert를 띄우는 코드
 
