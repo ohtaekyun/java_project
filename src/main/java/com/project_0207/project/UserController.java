@@ -19,20 +19,18 @@ public class UserController {
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());  
         return "register";
-    }
+    }  
 
     // 'user' 객체를 MongoDB 데이터베이스에 저장
     @PostMapping("/register")
-    public String registerUser(User user) {   
-        userRepository.save(user);  
-        return "redirect:/login";
-
-        // User existingUser1 = userRepository.findByUserid(user.getUserid());
-        // if (existingUser1.getUserid().equals(user.getUserid())) {
-        //     return "redirect:/register";
-        // } else {
-            
-        // }    
+    public String registerUser(User user) {          
+        User existingUser = userRepository.findByUserid(user.getUserid());
+        if (existingUser==null) {
+            userRepository.save(user);  
+            return "/login";
+        } else {
+            return "/register";
+        }        
     }
 
     // 로그인 페이지
@@ -48,10 +46,7 @@ public class UserController {
         if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
             return "redirect:/home";
         } else {
-            System.out.print("alert");
-
             // 비밀번호가 다를 경우 alert를 띄우는 코드
-
             return "login";
         }
     }
@@ -64,6 +59,14 @@ public class UserController {
     @GetMapping("/")
     public String gotoHome() {
         return "home";
+    }
+    @GetMapping("/babo1")
+    public String babo1Page() {
+        return "babo1";
+    }
+    @GetMapping("/babo2")
+    public String babo2Page() {
+        return "babo2";
     }
     @GetMapping("/us_chart")
     public String getlist() {

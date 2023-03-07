@@ -11,7 +11,7 @@ import lombok.Setter;
 public class User {
 
     @Id
-    private String id; // 여기서 id는 mongoDB에서 객체를 식별하기 위한 id
+    private String id; // mongoDB에서 객체를 식별하기 위한 id
     private String userid; // 유저 id
     private String password;
     private String nickname;
