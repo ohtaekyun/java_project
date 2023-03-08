@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController {
@@ -23,14 +25,29 @@ public class UserController {
 
     // 'user' 객체를 MongoDB 데이터베이스에 저장
     @PostMapping("/register")
-    public String registerUser(User user) {          
-        User existingUser = userRepository.findByUserid(user.getUserid());
-        if (existingUser==null) {
+    public String registerUser(User user, Model model) {          
+        User existingUser1 = userRepository.findByUserid(user.getUserid());
+        model.addAttribute("existingUser1", existingUser1);
+        if (existingUser1==null) {
             userRepository.save(user);  
             return "/login";
         } else {
             return "/register";
         }        
+    }
+    
+    @PostMapping("/checkDupId")
+    @ResponseBody
+    public String doCheckDupId(@RequestParam String userid) {        
+        boolean isDup = userRepository.checkDupId(userid);
+        return Boolean.toString(isDup);
+    }
+
+    @PostMapping("/checkDupNick")
+    @ResponseBody
+    public String doCheckDupNick(@RequestParam String nickname) {        
+        boolean isDup = userRepository.checkDupNick(nickname);
+        return Boolean.toString(isDup);
     }
 
     // 로그인 페이지
